@@ -105,6 +105,11 @@ function changeTitle() {
 
   titles.forEach((title) => {
     title.addEventListener("click", (e) => (e.target.textContent = ""));
+    title.addEventListener("blur", (e) => {
+      if (e.target.textContent == "") {
+        e.target.textContent = "Введите название";
+      }
+    });
   });
 }
 
