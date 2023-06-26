@@ -6,9 +6,35 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Trello Clone</title>
   </head>
   <body>
-    <h2>https://www.youtube.com/watch?v=f_rGz-DA5oY</h2>
+    <div class="website">
+      <div class="boards">
+        <div class="boards_item">
+          <span contenteditable="true" class="title">Введите название</span>
+          <div class="list">
+            <div class="list_item" draggable="true">Стартовая карточка</div>
+          </div>
+
+          <div class="form">
+            <textarea class="textarea" placeholder="Название карточки"></textarea>
+
+            <div class="buttons">
+              <button class="add_item-btn">Добавить карточку</button>
+              <button class="cancel_item-btn">Закрыть</button>
+            </div>
+          </div>
+
+          <div class="add_btn">
+            <span> + </span> Добавить столбец
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
   </body>
 </html>
