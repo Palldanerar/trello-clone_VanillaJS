@@ -1,6 +1,8 @@
 const lists = document.querySelectorAll(".list");
 const button = document.querySelector(".button");
+
 let value;
+let dragItem = null;
 
 function addTask() {
   const btn = document.querySelector(".add_btn");
@@ -59,6 +61,8 @@ function addTask() {
     newItem.textContent = value;
     lists[0].append(newItem);
 
+    dragNDrop();
+
     textarea.value = "";
     value = "";
     form.style.display = "none";
@@ -68,7 +72,6 @@ function addTask() {
 }
 
 function addBoard() {
-  console.log(1);
   const boards = document.querySelector(".boards");
   const board = document.createElement("div");
   board.classList.add("boards_item");
@@ -78,9 +81,23 @@ function addBoard() {
     </div>
     `;
 
+  board.addEventListener("contextmenu", (e) => {
+    let responce = confirm("Вы точно хотите удалить доску?");
+    e.preventDefault();
+
+    if (responce) {
+      board.remove();
+
+      return;
+    }
+
+    return;
+  });
+
   boards.append(board);
 
   changeTitle();
+  dragNDrop();
 }
 
 function changeTitle() {
@@ -91,7 +108,56 @@ function changeTitle() {
   });
 }
 
+function dragNDrop() {
+  const listItems = document.querySelectorAll(".list_item");
+  const lists = document.querySelectorAll(".list");
+
+  for (let i = 0; i < listItems.length; i++) {
+    const item = listItems[i];
+
+    item.addEventListener("dragstart", () => {
+      dragItem = item;
+      setTimeout(() => {
+        item.style.display = "none";
+      });
+    });
+
+    item.addEventListener("dragend", () => {
+      setTimeout(() => {
+        item.style.display = "block";
+        dragItem = null;
+      });
+    });
+
+    item.addEventListener("dblclick", () => {
+      console.log(1);
+      item.remove();
+    });
+
+    for (let j = 0; j < lists.length; j++) {
+      const list = lists[j];
+
+      list.addEventListener("dragover", (e) => e.preventDefault());
+
+      list.addEventListener("dragenter", function (e) {
+        e.preventDefault();
+        this.style.backgroundColor = "rgba(0,0,0,.3)";
+      });
+
+      list.addEventListener("dragleave", function () {
+        this.style.backgroundColor = "rgba(0,0,0,0)";
+      });
+
+      list.addEventListener("drop", function () {
+        this.style.backgroundColor = "rgba(0,0,0,0)";
+        this.append(dragItem);
+      });
+    }
+  }
+}
+
 addTask();
 changeTitle();
+dragNDrop();
 
 button.addEventListener("click", addBoard);
