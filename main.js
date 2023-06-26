@@ -1,4 +1,5 @@
 const lists = document.querySelectorAll(".list")
+const button = document.querySelector(".button")
 let value
 
 function addTask() {
@@ -69,4 +70,20 @@ function addTask() {
 
 }
 
+function addBoard() {
+    console.log(1)
+    const boards = document.querySelector(".boards")
+    const board = document.createElement("div")
+    board.classList.add("boards_item")
+    board.innerHTML =  `
+    <span contenteditable="true" class="title">Введите название</span>
+        <div class="list"></div>
+    </div>
+    `
+
+    boards.append(board)
+}
+
 addTask()
+
+button.addEventListener("click", addBoard)
